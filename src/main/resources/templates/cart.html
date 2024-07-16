@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+        }
+        header {
+            background: linear-gradient(70deg, #CAEDA7,  #7E56C8);
+            text-align: center;
+            display: flex;
+            height: 70px;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .header-title {
+                        color: white;
+
+            flex: 1;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        .container {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            margin-left: 100px;
+            margin-right: 100px;
+            margin-top: 100px;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .cart-item img {
+            width: 100px;
+            height: 150px;
+            object-fit: contain;
+        }
+        .cart-item-info {
+            flex: 1;
+            margin-left: 20px;
+        }
+        .cart-item-title {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .cart-item-author {
+            font-size: 1em;
+            color: #555;
+        }
+        .cart-item-price {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #CAEDA7;
+        }
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .quantity-button {
+            background-color: #7E56C8;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .quantity-button:hover {
+            background-color: #63419F;
+        }
+        .quantity-input {
+            width: 40px;
+            text-align: center;
+        }
+        .total-price {
+            font-size: 1.5em;
+            font-weight: bold;
+            text-align: right;
+            margin: 20px 0;
+        }
+        .button-style {
+            background-color: #7E56C8;
+            border: none;
+            color: white;
+            border-radius: 32px;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.15s;
+        }
+        .button-style:hover {
+            background-color: #63419F;
+        }
+        .summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1 class="header-title">Sber Book</h1>
+</header>
+
+<div class="container">
+
+    <th:block th:each="order : ${orders}">
+        <div class="cart-item">
+            <img th:src="${order.book.url}" alt="Book Cover">
+            <div class="cart-item-info">
+                <div class="cart-item-title" th:text="${order.book.name}"></div>
+                <div class="cart-item-author" th:text="${order.book.author}"></div>
+                <div class="cart-item-price" th:text="${order.book.price}"></div>
+            </div>
+            <div class="cart-item-quantity">
+                <a class="quantity-button" th:href="@{'/cartQuantityUpdate?sy=-&oId='+${order.id}}" style="color: white; text-decoration: none;">-</a>
+                <div class="quantity-input">[[${order.quantity}]]</div>
+                <a class="quantity-button" th:href="@{'/cartQuantityUpdate?sy=in&oId='+${order.id}}" style="color: white; text-decoration: none;">+</a>
+            </div>
+            <div class="total-price" th:text="${order.totalPrice}"></div>
+
+
+        </div>
+    </th:block>
+
+    <div class="summary">
+        <a href="/my-orders" class="button-style">Мои заказы</a>
+        <div class="total-price" th:text="${totalOrderPrice}"></div>
+    </div>
+    <form style=" position:relative;  top 180px; left:93%" th:method="POST" th:action="@{/cart}">
+        <input class="button-style" style="" type="submit" value="заказать"/>
+    </form>
+</div>
+
+</body>
+</html>

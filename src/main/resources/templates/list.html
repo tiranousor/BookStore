@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Books</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+        .header-title {
+            margin: 0;
+        }
+        .container {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            margin-left: 80px;
+            margin-right: 80px;
+        }
+
+        .book-item {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 10px 0;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .url-class {
+            display: block;
+            border: 1px solid grey;
+            border-radius: 10px;
+            margin-right: 20px;
+            width: 100px;
+            height: 150px; /* Фиксированная высота для изображений */
+            object-fit: cover;
+        }
+        .book-info {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .book-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .book-author {
+            font-size: 1em;
+            color: #777;
+        }
+        .book-actions {
+            display: flex;
+            flex-direction: column;
+        }
+        .action-button {
+            background-color: #343a40;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: background-color 0.15s;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        .action-button:hover {
+            background-color: #212529;
+        }
+        footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 5px 0;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .add-book-button {
+            background-color: white;
+            color: #343a40;
+            border: 2px solid #343a40;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .add-book-button:hover {
+            background-color: #343a40;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1 class="header-title">Каталог книг</h1>
+    <form th:action="@{/logout}" th:method="POST">
+        <input type="submit" class="add-book-button" value="Logout"/>
+    </form>
+    <a href="employee/add-book" class="add-book-button">Добавить книгу</a>
+</header>
+
+<div class="container">
+    <th:block th:each="book : ${bookList}">
+        <div class="book-item">
+            <img th:src="${book.url}" alt="Book Cover" class="url-class">
+            <div class="book-info">
+                <div class="book-title" th:text="${book.name}">Название книги</div>
+                <div class="book-author" th:text="${book.author}">Автор книги</div>
+            </div>
+            <div class="book-actions">
+                <a href="#" class="action-button">Редактировать</a>
+                <form th:method="DELETE" th:action="@{/{bookDetails}}">
+                    <input class="action-button" type="submit" value="Удалить"/>
+                </form>
+            </div>
+        </div>
+    </th:block>
+</div>
+
+<footer>
+    <p>&copy; 2024 Book Store.</p>
+</footer>
+
+</body>
+</html>
