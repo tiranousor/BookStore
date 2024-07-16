@@ -459,7 +459,9 @@
 <!--                    <input  style="color: white;   background-color: transparent;border:0; " type="submit" value="Выход">-->
 <!--                </form>-->
                 </div>
-                <div sec:authorize="hasRole('ROLE_USER')">
+                <div style=" display: flex;
+            flex-direction: column;
+            overflow: hidden; height:auto"  sec:authorize="hasRole('ROLE_USER')" >
                     <a href="/cart">Корзина</a>
                     <a href="/my-orders">Заказы</a>
 
