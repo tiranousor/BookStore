@@ -59,8 +59,8 @@
       .book-title {
             font-size: 32px;
             font-weight: bold;
-            color: white;
-
+            color:#7E56C8;
+text-shadow: 1px 1px 1px #CAEDA7;
         }
         .container {
             padding: 50px 0 0 150px;
@@ -86,12 +86,6 @@
             text-align: center;
             margin-bottom: 10px;
             margin-top: 20px;
-        }
-
-        .book-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
         }
 
         .book-author {
@@ -144,7 +138,9 @@
         }
   .book-author {
             font-size: 1.4em;
-            color: #7E56C8;
+            color: #CAEDA7;
+            border:1px;
+            text-shadow: 1px 1px 1px #7E56C8;
         }
      .book-annotation {
             margin-top: 20px;
@@ -172,12 +168,12 @@
             flex-direction: column;
             align-items: center;
             position: relative;
-            height: 620px;
+            height: auto;
             margin-bottom: 15px;
         }
         .book-item img {
             margin-top: 10px;
-            width: 260px;
+            width: auto;
             height: 350px;
             object-fit: contain;
             margin-bottom: 15px;
@@ -231,7 +227,7 @@
             background-color: #7E56C8;
             border: 1px solid #7E56C8;
             border-radius: 32px;
-            height: 30px;
+            height: 20px;
             color: white;
             padding: 10px 20px;
             text-align: center;
@@ -259,7 +255,7 @@
         <div class="book-item">
             <img th:src="${book.url}" alt="Book Cover">
             <div class="book-info">
-                <div class="book-title" th:text="${book.price}">Цена книги</div>
+                <div class="book-title" style="color: #7E56C8" th:text="${book.price}">Цена книги</div>
                 <div sec:authorize="isAuthenticated()">
                     <meta name="_csrf" th:content="${_csrf.token}"/>
                     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>

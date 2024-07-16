@@ -44,7 +44,7 @@
             background-color: white;
         }
         .container {
-            padding: 120px 0 0 150px;
+            padding: 120px 60px 0 130px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -110,16 +110,29 @@
             color: #343a40;
             font-weight: bold;
         }
-
+     .back-button {
+            margin-top: 80px;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #7E56C8;
+            color: white;
+            text-decoration: none;
+            border-radius: 32px;
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #5e3ea6;
+        }
     </style>
 </head>
 <body>
 <header>
-    <h1 class="header-title">Sber Book</h1>
+    <h1 class="header-title">Заказы</h1>
+
 </header>
+<a href="/" class="back-button" style="position:relative;  left:43%;">Вернуться к каталогу</a>
 
 <div class="container">
-    <h1>Мои заказы</h1>
     <table>
         <thead>
         <tr>
@@ -130,7 +143,14 @@
         </thead>
         <tbody>
         <tr th:each="order : ${orders}">
-            <td th:text="${order.orderDate}"></td>
+
+            <td>дата
+                <p th:text="${#temporals.format(order.orderDate, 'dd-MM-yyyy')}"> </p>
+                время
+                <p th:text="${#temporals.format(order.orderDate, 'HH:mm:ss')}"> </p>
+
+            </td>
+
             <td th:text="${order.totalOrderPrice}"></td>
             <td>
                 <ul>
@@ -140,7 +160,7 @@
                             <div class="book-info">
                                 <div class="book-title" th:text="${item.book.name}"></div>
                                 <div class="book-quantity" th:text="'Количество: ' + ${item.quantity}"></div>
-                                <div class="book-price" th:text="'Цена: ' + ${item.totalPrice}"></div>
+                                <div class="book-price" th:text="'Стоимость: ' + ${item.totalPrice}"></div>
                             </div>
                         </div>
                     </li>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart</title>
+    <title>Корзина</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -115,12 +115,26 @@
             align-items: center;
             margin-top: 20px;
         }
+        .back-button {
+            margin-top: 80px;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #7E56C8;
+            color: white;
+            text-decoration: none;
+            border-radius: 32px;
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #5e3ea6;
+        }
     </style>
 </head>
 <body>
 <header>
-    <h1 class="header-title">Sber Book</h1>
+    <h1 class="header-title">Корзина</h1>
 </header>
+<a href="/" class="back-button" style="position:relative;  left:43%;">Вернуться к каталогу</a>
 
 <div class="container">
 
@@ -142,9 +156,12 @@
 
         </div>
     </th:block>
-
+    <div th:if="${#lists.isEmpty(orders)}">
+        <div class="summary">
+            <a href="/my-orders" style="position:absolute; left:45%; top:30%" class="button-style">Мои заказы</a>
+        </div>
+    </div>
     <div class="summary">
-        <a href="/my-orders" class="button-style">Мои заказы</a>
         <div class="total-price" th:text="${totalOrderPrice}"></div>
     </div>
     <div th:if="${not #lists.isEmpty(orders)}">

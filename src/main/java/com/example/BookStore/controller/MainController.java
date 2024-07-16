@@ -16,6 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -107,6 +109,9 @@ public class MainController {
     public String myOrders(Model model, Authentication authentication) {
         Person person = personService.getPerson(authentication.getName()).get();
         List<Order> orders = orderService.showOrders(person);
+//        LocalDateTime orderDates = orders.get().getOrderDate();
+//        model.addAttribute("localDateTime",orderDates);
+//        model.addAttribute("orderDate", DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
         model.addAttribute("orders", orders);
         return "my-orders";
     }
