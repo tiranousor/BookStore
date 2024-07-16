@@ -17,7 +17,7 @@ public class UserRestController {
         this.cartService = cartService;
     }
 
-    @PostMapping("/add-order_{person_id}&{book_id}")
+    @PostMapping("/add-order/{person_id}/{book_id}")
     public String addOrder(Model model, @PathVariable int person_id, @PathVariable int book_id){
         cartService.saveCart(person_id, book_id);
         return "Item added to cart";

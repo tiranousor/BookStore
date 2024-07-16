@@ -147,9 +147,11 @@
         <a href="/my-orders" class="button-style">Мои заказы</a>
         <div class="total-price" th:text="${totalOrderPrice}"></div>
     </div>
+    <div th:if="${not #lists.isEmpty(orders)}">
     <form style=" position:relative;  top 180px; left:93%" th:method="POST" th:action="@{/cart}">
         <input class="button-style" style="" type="submit" value="заказать"/>
     </form>
+    </div>
 </div>
 
 </body>

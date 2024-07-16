@@ -75,11 +75,6 @@ public class MainController {
         return "redirect:/login?registration";
     }
 
-    //    @GetMapping("/cart")
-//    public String listOfOrders(Model model) {
-//        model.addAttribute("ordersList", cartService.findAll());
-//        return "orders";
-//    }
     @GetMapping("/cartQuantityUpdate")
     public String updateCartQuantity(@RequestParam String sy, @RequestParam Integer oId) {
         cartService.updateQuantity(sy, oId);
