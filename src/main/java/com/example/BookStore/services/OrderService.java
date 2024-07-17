@@ -59,12 +59,20 @@ public class OrderService {
         cartRepository.deleteAll(cartItems);
     }
 
-    public List<Order> showOrders(Person person) {
-        return orderRepository.findByPerson(person);
-    }
-
+//    public List<Order> showOrders(Person person) {
+//        return orderRepository.findByPerson(person);
+//    }
+//
     public List<Order> showAllOrders() {
         return orderRepository.findAll();
     }
+//
+    public List<Order> showOrders(Person person) {
+        return orderRepository.findAllByPersonOrderByOrderDateDesc(person);
+    }
+
+//    public List<Order> showAllOrders() {
+//        return orderRepository.findAllOrdersOrderByOrderDate();
+//    }
 }
 
