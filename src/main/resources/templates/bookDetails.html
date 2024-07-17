@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +12,8 @@
             background-color: white;
         }
         header {
-            background-color: white;
+              background: linear-gradient(70deg, #CAEDA7,  #7E56C8);
+
             text-align: center;
             display: flex;
             height: 70px;
@@ -26,7 +27,7 @@
             z-index: 1000;
         }
         .header-title {
-            color: #7E56C8;
+            color: white;
             text-transform: uppercase;
         }
         .container {
@@ -98,12 +99,167 @@
             width: 150px;
             margin: 0;
         }
+        #nav-container {
+            position: fixed;
+            height: 100vh;
+            width: 100%;
+            pointer-events: none;
+        }
+        #nav-container .bg {
+            position: absolute;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 70px);
+            visibility: hidden;
+            opacity: 0;
+            transition: .3s;
+            background: #000;
+        }
+        #nav-container:focus-within .bg {
+            visibility: visible;
+            opacity: .6;
+        }
+        #nav-container * {
+            visibility: visible;
+        }
+
+        .button {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 1;
+            -webkit-appearance: none;
+            border: 0;
+            background: transparent;
+            border-radius: 0;
+            height: 70px;
+            width: 30px;
+            cursor: pointer;
+            pointer-events: auto;
+            margin-left: 25px;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+        }
+        .icon-bar {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background: white;
+            transition: .3s;
+        }
+        .icon-bar + .icon-bar {
+            margin-top: 5px;
+        }
+
+        #nav-container:focus-within .button {
+            pointer-events: none;
+        }
+        #nav-container:focus-within .icon-bar:nth-of-type(1) {
+            transform: translate3d(0,8px,0) rotate(45deg);
+        }
+        #nav-container:focus-within .icon-bar:nth-of-type(2) {
+            opacity: 0;
+        }
+        #nav-container:focus-within .icon-bar:nth-of-type(3) {
+            transform: translate3d(0,-8px,0) rotate(-45deg);
+        }
+
+        #nav-content {
+            margin-top: 70px;
+            padding: 20px;
+            width: 90%;
+            max-width: 300px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: calc(100% - 70px);
+            background: #ececec;
+            pointer-events: auto;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            transform: translateX(-100%);
+            transition: transform .3s;
+            will-change: transform;
+            contain: paint;
+        }
+
+        #nav-content ul {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #nav-content li a {
+            padding: 10px 5px;
+            display: block;
+            text-transform: uppercase;
+            transition: color .1s;
+            color: #333;
+        }
+
+        #nav-content li a:hover {
+            color: #7E56C8;
+        }
+
+        #nav-container:focus-within #nav-content {
+            transform: none;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        a,
+        a:visited,
+        a:focus,
+        a:active,
+        a:link {
+            text-decoration: none;
+            outline: 0;
+        }
+
+        a {
+            color: currentColor;
+            transition: .2s ease-in-out;
+        }
+
+        ul {
+            padding: 0;
+            list-style: none;
+        }
     </style>
 </head>
 <body>
-<header>
-    <h1 class="header-title">Book List</h1>
-</header>
+<header><h1 class=" header-title">Редактирование</h1></header>
+<div id="nav-container" style="z-index:9999;">
+    <div class="bg"></div>
+    <div class="button"style="color:white;" tabindex="0">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </div>
+    <div id="nav-content" tabindex="0">
+            <ul>
+                <li> <a href="/">Главная</a></li>
+                <li> <a href="/add-book">Добавить</a></li>
+                <li>  <a href="/bookDetails">Редактировать</a></li>
+                <li> <a href="/users">Заказы</a></li>
+                <li>
+                    <form th:action="@{/logout}" th:method="POST" >
+                        <input  style="background-color: transparent;border:0;       padding: 10px 5px;
+                            display: block;
+                            text-transform: uppercase;
+                            transition: color .1s;
+                            color: #333; "  onmouseover="this.style.color=' #7E56C8';" onmouseout="this.style.color='#333';"
+                                type="submit" value="Выход">
+                    </form>
+                </li>
+            </ul>
+    </div>
+</div>
 
 <div class="container">
     <th:block th:each="book : ${bookList}">

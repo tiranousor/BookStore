@@ -8,6 +8,12 @@
     <link href='https://unpkg.com/css.gg@2.0.0/icons/css/log-out.css' rel='stylesheet'>
     <title>List of Books</title>
     <style>
+        @import url('https://fonts.googleapis.com/css?family=Encode+Sans+Condensed:400,600');
+
+        * {
+          outline: none;
+        }
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -19,14 +25,14 @@
             text-align: center;
             display: flex;
             height: 70px;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border: 1px solid #ddd;
             position: fixed;
             top: 0;
             width: 100%;
-            z-index: 1000;
+            z-index:1000;
         }
         .header-title {
             color: white;
@@ -41,7 +47,7 @@
             right:90px;
             align-items: center;
             background-color: white;
-
+            z-index:1000;
         }
         .header-icons a {
             margin: 0 100px;
@@ -240,117 +246,6 @@
             }
         }
 
-        :root {
-            --primColor: #dcdcdc;
-            --secoColor: #555555;
-            --cornerRad: 4px;
-        }
-
-        details {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 1000;
-        }
-        summary {
-            writing-mode: vertical-lr;
-            text-align: center;
-            padding: 12px 10px;
-            width: 23px;
-            height: 17px;
-            cursor: pointer;
-            user-select: none;
-            outline: none;
-            transition: transform 200ms ease-in-out 0s;
-        }
-        summary::before,
-        summary::after {
-            position: static;
-            top: 0;
-            left: 0;
-        }
-        summary::before {
-            content: "";
-        }
-        summary::after {
-            content: "III";
-            letter-spacing: -1px;
-        }
-        summary:hover {
-            transform: scale(1.1);
-        }
-        summary::marker {
-            font-size: 0;
-        }
-        summary::-webkit-details-marker {
-            display: none;
-        }
-        details[open] .menu {
-            animation-name: menuAnim;
-        }
-        details[open] summary::before {
-            content: "X";
-        }
-        details[open] summary::after {
-            content: "";
-        }
-        .menu {
-            height: 0;
-            width: fit-content;
-            border-radius: var(--cornerRad);
-            background-color: var(--primColor);
-            box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2);
-            margin-top: 8px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            animation: closeMenu 300ms ease-in-out forwards;
-        }
-        .menu a {
-            padding: 12px 24px;
-            margin: 0 16px;
-            color: var(--secoColor);
-            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
-            text-decoration: none;
-            text-align: center;
-            transition: filter 200ms linear 0s;
-        }
-        .menu a:nth-of-type(1) {
-            padding-top: 24px;
-        }
-        .menu a:nth-last-of-type(1) {
-            border-bottom: none;
-        }
-        .menu a:hover {
-            filter: brightness(200%);
-        }
-        details::before {
-            content: "← Click This Button";
-            color: var(--secoColor);
-            position: absolute;
-            margin-left: 80px;
-            padding: 10px 10px;
-            opacity: 0.4;
-        }
-        details[open]::before {
-            animation: fadeMe 300ms linear forwards;
-        }
-        @keyframes menuAnim {
-            0% {
-                height: 0;
-            }
-            100% {
-                height: 150px;
-            }
-        }
-        @keyframes fadeMe {
-            0% {
-                opacity: 0.4;
-            }
-            100% {
-                opacity: 0;
-            }
-        }
         .d1 {
             position: absolute;
             top: 7px;
@@ -370,107 +265,198 @@
             object-fit: cover;
         }
 
+        #nav-container {
+            position: fixed;
+            height: 100vh;
+            width: 100%;
+            pointer-events: none;
+        }
+        #nav-container .bg {
+            position: absolute;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 70px);
+            visibility: hidden;
+            opacity: 0;
+            transition: .3s;
+            background: #000;
+        }
+        #nav-container:focus-within .bg {
+            visibility: visible;
+            opacity: .6;
+        }
+        #nav-container * {
+            visibility: visible;
+        }
 
+        .button {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 1;
+            -webkit-appearance: none;
+            border: 0;
+            background: transparent;
+            border-radius: 0;
+            height: 70px;
+            width: 30px;
+            cursor: pointer;
+            pointer-events: auto;
+            margin-left: 25px;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+        }
+        .icon-bar {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background: white;
+            transition: .3s;
+        }
+        .icon-bar + .icon-bar {
+            margin-top: 5px;
+        }
 
-        #popup {
-  display: table;
-  position: fixed; top: 0; left: 0;
-  z-index: 100;
-  height: 100%;
-  width: 100%;
-  background: rgba(240,240,240,.9);
-  visibility: hidden;
-  animation: animaciya 1s 5s forwards; /* 5s - это количество секунд по истечении которых появляется сообщение */
-  cursor: pointer;
-}
-@keyframes animaciya {
-  from {visibility: hidden;}
-  to {visibility: visible;}
-}
-#popup figure {
-  display: table-cell;
-  vertical-align: middle;
-}
-#popup div, #popup figcaption, #popup figure:before {
-  max-width: 500px; /* максимальная ширина */
-  margin: 0 auto;
-  border-style: solid;
-  border-color: rgb(88,125,164);
-  background: #fff;
-}
-#popup figure:before { /* стиль кнопки "закрыть" */
-  content: "закрыть";
-  display: block;
-  padding: 0 1%;
-  border-width: 4px 4px 0 4px;
-  border-radius: 5px 5px 0 0;
-  text-align: right;
-  color: rgb(88,125,164);
-}
-#popup div, #popup figcaption {
-  padding: 1%;
-  cursor: default;
-}
-#popup figcaption {
-  position: relative;
-  border-width: 0 4px 0 4px;
-  font-size: 150%;
-  text-transform: uppercase;
-  color: rgb(100,100,100);
-}
-#popup figcaption:before { /* стиль восклицательного знака, не поддерживается Google Chrome. Его можно заменить на что-то более приемлемое */
-  content: "\26a0 \20 \20";
-  color: red;
-  font-size: 150%;
-  vertical-align: middle;
-}
-#popup div {
-  border-width: 0 4px 4px 4px;
-  border-radius: 0 0 5px 5px;
-}
+        #nav-container:focus-within .button {
+            pointer-events: none;
+        }
+        #nav-container:focus-within .icon-bar:nth-of-type(1) {
+            transform: translate3d(0,8px,0) rotate(45deg);
+        }
+        #nav-container:focus-within .icon-bar:nth-of-type(2) {
+            opacity: 0;
+        }
+        #nav-container:focus-within .icon-bar:nth-of-type(3) {
+            transform: translate3d(0,-8px,0) rotate(-45deg);
+        }
+
+        #nav-content {
+            margin-top: 70px;
+            padding: 20px;
+            width: 90%;
+            max-width: 300px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: calc(100% - 70px);
+            background: #ececec;
+            pointer-events: auto;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            transform: translateX(-100%);
+            transition: transform .3s;
+            will-change: transform;
+            contain: paint;
+        }
+
+        #nav-content ul {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #nav-content li a {
+            padding: 10px 5px;
+            display: block;
+            text-transform: uppercase;
+            transition: color .1s;
+            color: #333;
+        }
+
+        #nav-content li a:hover {
+            color: #7E56C8;
+        }
+
+        #nav-container:focus-within #nav-content {
+            transform: none;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        a,
+        a:visited,
+        a:focus,
+        a:active,
+        a:link {
+            text-decoration: none;
+            outline: 0;
+        }
+
+        a {
+            color: currentColor;
+            transition: .2s ease-in-out;
+        }
+
+        ul {
+            padding: 0;
+            list-style: none;
+        }
     </style>
 </head>
 <body>
-<header>
-    <h1 class="header-title">Sber Book</h1>
-    <div sec:authorize="!isAuthenticated()">
-        <a class="header-icons" href = "/login"><i style="color: white;" class="gg-log-in"></i></a></div>
-    <div sec:authorize="isAuthenticated()">
-        <form th:action="@{/logout}" th:method="POST" class="header-icons">
-            <i class="gg-log-out">
-                <input  style="color: transparent;   background-color: transparent;border:0; position:absolute; top:0px; left:-0px;" type="submit" value="Выход">  </i>
-        </form>
+<header><h1 class=" header-title">Каталог товаров</h1></header>
+<div id="nav-container" style="z-index:9999;">
+    <div class="bg"></div>
+    <div class="button"style="color:white;" tabindex="0">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
     </div>
-
-
-
-
-
-        <details>
-            <summary></summary>
-            <nav class="menu">
-                <div style=" display: flex;
-            flex-direction: column;
-            overflow: hidden;" sec:authorize="hasRole('ROLE_ADMIN')">
-                <a href="/add-book">Добавить</a>
-                <a href="/bookDetails">Редактировать</a>
-                <a href="/users">Заказы</a>
-<!--                <form th:action="@{/logout}" th:method="POST" >-->
-<!--                    <input  style="color: white;   background-color: transparent;border:0; " type="submit" value="Выход">-->
-<!--                </form>-->
-                </div>
-                <div style=" display: flex;
-            flex-direction: column;
-            overflow: hidden; height:auto"  sec:authorize="hasRole('ROLE_USER')" >
-                    <a href="/cart">Корзина</a>
-                    <a href="/my-orders">Заказы</a>
-
-                </div>
-            </nav>
-        </details>
-</header>
+    <div id="nav-content" tabindex="0">
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
+            <ul>
+                <li> <a href="/">Главная</a></li>
+                <li> <a href="/add-book">Добавить</a></li>
+                <li>  <a href="/bookDetails">Редактировать</a></li>
+                <li> <a href="/users">Заказы</a></li>
+                <li>
+                    <form th:action="@{/logout}" th:method="POST" >
+                        <input  style="background-color: transparent;border:0;       padding: 10px 5px;
+                            display: block;
+                            text-transform: uppercase;
+                            transition: color .1s;
+                            color: #333; "  onmouseover="this.style.color=' #7E56C8';" onmouseout="this.style.color='#333';"
+                                type="submit" value="Выход">
+                    </form>
+                </li>
+            </ul>
+        </div>
+        <div sec:authorize="hasRole('ROLE_USER')" >
+            <ul>
+                <li> <a href="/">Главная</a></li>
+                <li>  <a href="/cart">Корзина</a></li>
+                <li> <a href="/my-orders">Заказы</a></li>
+                <li>
+                    <form th:action="@{/logout}" th:method="POST" >
+                        <input  style="background-color: transparent;border:0;       padding: 10px 5px;
+                            display: block;
+                            text-transform: uppercase;
+                            transition: color .1s;
+                            color: #333; "  onmouseover="this.style.color=' #7E56C8';" onmouseout="this.style.color='#333';"
+                                type="submit" value="Выход">
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div sec:authorize="!isAuthenticated()">
+    <a class="header-icons" href = "/login"><i style="color: white;" class="gg-log-in"></i></a></div>
+<!--<div sec:authorize="isAuthenticated()">-->
+<!--    <form th:action="@{/logout}" th:method="POST" class="header-icons">-->
+<!--        <i class="gg-log-out">-->
+<!--            <input  style="color: transparent;   background-color: transparent;border:0; position:absolute; top:0px; left:-0px;" type="submit" value="Выход">  </i>-->
+<!--    </form>-->
+<!--</div>-->
 
 <div class="container">
+<!-- -->
+
     <th:block th:each="book : ${bookList}">
         <a class="book-item" th:href="@{/{id}(id=${book.id})}" style="text-decoration:none; color: #333">
             <div class="d1" th:if="${book.quantity < 10}">
@@ -484,34 +470,10 @@
                 <div class="book-author" th:text="${book.author}">Автор книги</div>
                 <div class="price-container">
                     <div class="book-price" th:text="${book.price}">Цена</div>
-
                 </div>
             </div>
         </a>
     </th:block>
 </div>
-
-
-<div id="popup">
-    <figure>
-        <figcaption>заголовок</figcaption>
-        <div>содержание</div>
-    </figure>
-</div>
-<script>
-    window.onkeyup = okno; // нажатие Esc, см. условие "e.keyCode==27"
-    document.getElementById('popup').onclick = okno;
-
-    function okno(e) {
-      if (e.target.nodeName != 'DIV' && e.target.nodeName != 'FIGCAPTION' || e.keyCode==27) { // через && перечисляются теги, клинкув на которые окно не будет закрыто; сюда же можно включить тег A или IFRAME
-        document.getElementById('popup').style.display='none';
-        localStorage.setItem('popup1', 'none');
-      }
-    }
-
-    if(localStorage.getItem('popup1')) {
-      document.getElementById('popup').style.display='none';
-    }
-</script>
 </body>
 </html>
