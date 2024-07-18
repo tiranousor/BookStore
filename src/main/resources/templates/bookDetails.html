@@ -271,7 +271,7 @@
             </div>
             <div class="book-actions">
                 <a th:href="@{/{id}/edit(id=${book.getId()})}" class="action-button">Edit</a>
-                <form th:method="DELETE" th:action="@{/{bookDetails}}">
+                <form th:method="DELETE" th:action="@{/{id}(id=${book.getId()})}">
                     <input class="action-button" type="submit" value="Delete"/>
                 </form>
             </div>

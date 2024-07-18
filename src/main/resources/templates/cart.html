@@ -347,6 +347,24 @@
         <input class="button-style" style="" type="submit" value="заказать"/>
     </form>
     </div>
+
+<!--    <div class="summary">-->
+<!--        <form th:method="POST" th:action="@{/applyPromoCode}">-->
+<!--            <input type="text" name="promoCode" placeholder="Enter Promo Code">-->
+<!--            <input class="button-style" type="submit" value="Apply Promo Code">-->
+<!--        </form>-->
+<!--    </div>-->
+
+    <div class="summary">
+        <div class="total-price" th:text="${totalOrderPrice}"></div>
+    </div>
+
+<!--    <div th:if="${not #lists.isEmpty(orders)}">-->
+<!--        <form th:method="POST" th:action="@{/cart}">-->
+<!--            <input type="hidden" name="promoCode" value="${appliedPromoCode}">-->
+<!--            <input class="button-style" type="submit" value="Order">-->
+<!--        </form>-->
+<!--    </div>-->
 </div>
 
 </body>

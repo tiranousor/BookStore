@@ -244,6 +244,7 @@ text-shadow: 1px 1px 1px #CAEDA7;
 
 <header>
     <a href="/" class="add-book-button">Вернуться к каталогу</a>
+
 </header>
 
 <div class="book-header">
@@ -256,7 +257,7 @@ text-shadow: 1px 1px 1px #CAEDA7;
             <img th:src="${book.url}" alt="Book Cover">
             <div class="book-info">
                 <div class="book-title" style="color: #7E56C8" th:text="${book.price}">Цена книги</div>
-                <div sec:authorize="isAuthenticated()">
+                <div sec:authorize="hasRole('ROLE_USER')" >
                     <meta name="_csrf" th:content="${_csrf.token}"/>
                     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
                     <button id="cartButton"

@@ -38,7 +38,7 @@
             background-color: #7E56C8;
             color: white;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 32px;
             transition: background-color 0.3s ease;
         }
         .back-button:hover {
@@ -59,7 +59,7 @@
             background-color: #F5F6F8;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            border-radius: 5px;
+            border-radius: 32px;
         }
         .person-name {
             font-size: 1.5em;
@@ -70,7 +70,7 @@
         .cart-item {
             background-color: #fff;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 32px;
             padding: 10px;
             margin-bottom: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -88,7 +88,7 @@
             padding: 10px;
             background-color: #f8f9fa;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 32px;
             display: flex;
             flex-direction: column;
         }
@@ -102,7 +102,7 @@
             height: 70px;
             margin-right: 15px;
             border: 1px solid grey;
-            border-radius: 5px;
+            border-radius: 35px;
             object-fit: cover;
         }
         .cart-item ul li .book-info {
@@ -118,6 +118,33 @@
         .cart-item ul li .book-price {
             color: #343a40;
             font-weight: bold;
+        }
+        .order-status {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .order-status select {
+            padding: 5px 10px;
+            border-radius: 32px;
+            border: 1px solid #ddd;
+            background-color: white;
+            margin-right: 10px;
+            font-size: 1em;
+            color: #343a40;
+        }
+        .order-status button {
+            background-color: #7E56C8;
+            border: none;
+            color: white;
+            padding: 5px 15px;
+            cursor: pointer;
+            border-radius: 32px;
+            transition: background-color 0.3s ease;
+            font-size: 1em;
+        }
+        .order-status button:hover {
+            background-color: #5e3ea6;
         }
         footer {
             padding: 20px;
@@ -262,10 +289,10 @@
     </style>
 </head>
 <body>
-<header><h1 class=" header-title">Заказы пользователей</h1></header>
+<header><h1 class="header-title">Заказы пользователей</h1></header>
 <div id="nav-container" style="z-index:9999;">
     <div class="bg"></div>
-    <div class="button"style="color:white;" tabindex="0">
+    <div class="button" style="color:white;" tabindex="0">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -273,42 +300,32 @@
     <div id="nav-content" tabindex="0">
         <div sec:authorize="hasRole('ROLE_ADMIN')">
             <ul>
-                <li> <a href="/">Главная</a></li>
-                <li> <a href="/add-book">Добавить</a></li>
-                <li>  <a href="/bookDetails">Редактировать</a></li>
-                <li> <a href="/users">Заказы</a></li>
+                <li><a href="/">Главная</a></li>
+                <li><a href="/add-book">Добавить</a></li>
+                <li><a href="/bookDetails">Редактировать</a></li>
+                <li><a href="/users">Заказы</a></li>
                 <li>
-                    <form th:action="@{/logout}" th:method="POST" >
-                        <input  style="background-color: transparent;border:0;       padding: 10px 5px;
-                            display: block;
-                            text-transform: uppercase;
-                            transition: color .1s;
-                            color: #333; "  onmouseover="this.style.color=' #7E56C8';" onmouseout="this.style.color='#333';"
-                                type="submit" value="Выход">
+                    <form th:action="@{/logout}" th:method="POST">
+                        <input style="background-color: transparent; border: 0; padding: 10px 5px; display: block; text-transform: uppercase; transition: color .1s; color: #333;" onmouseover="this.style.color='#7E56C8';" onmouseout="this.style.color='#333';" type="submit" value="Выход">
                     </form>
                 </li>
             </ul>
         </div>
-        <div sec:authorize="hasRole('ROLE_USER')" >
+        <div sec:authorize="hasRole('ROLE_USER')">
             <ul>
-                <li> <a href="/">Главная</a></li>
-                <li>  <a href="/cart">Корзина</a></li>
-                <li> <a href="/my-orders">Заказы</a></li>
+                <li><a href="/">Главная</a></li>
+                <li><a href="/cart">Корзина</a></li>
+                <li><a href="/my-orders">Заказы</a></li>
                 <li>
-                    <form th:action="@{/logout}" th:method="POST" >
-                        <input  style="background-color: transparent;border:0;       padding: 10px 5px;
-                            display: block;
-                            text-transform: uppercase;
-                            transition: color .1s;
-                            color: #333; "  onmouseover="this.style.color=' #7E56C8';" onmouseout="this.style.color='#333';"
-                                type="submit" value="Выход">
+                    <form th:action="@{/logout}" th:method="POST">
+                        <input style="background-color: transparent; border: 0; padding: 10px 5px; display: block; text-transform: uppercase; transition: color .1s; color: #333;" onmouseover="this.style.color='#7E56C8';" onmouseout="this.style.color='#333';" type="submit" value="Выход">
                     </form>
                 </li>
             </ul>
         </div>
     </div>
 </div>
-<a href="/" class="back-button" style="position:relative;  left:45%;">Вернуться назад</a>
+<a href="/" class="back-button" style="position:relative; left:45%;">Вернуться назад</a>
 
 <div class="container">
     <th:block th:each="entry : ${personOrdersMap}">
@@ -316,16 +333,8 @@
             <div class="person-name" th:text="${entry.key.username}"></div>
             <th:block th:each="order : ${entry.value}">
                 <div class="cart-item">
-
-                    <td> <strong> Дата:</strong>
-                        <span th:text="${#temporals.format(order.orderDate, 'dd-MM-yyyy')}"> </span>
-                        <strong>Время:</strong>
-                        <span th:text="${#temporals.format(order.orderDate, 'HH:mm:ss')}"> </span>
-
-                    </td>
-                    <div>
-                        <strong>Стоимость: </strong><span th:text="${order.totalOrderPrice}"></span>
-                    </div>
+                    <td><strong>Дата:</strong> <span th:text="${#temporals.format(order.orderDate, 'dd-MM-yyyy')}"></span> <strong>Время:</strong> <span th:text="${#temporals.format(order.orderDate, 'HH:mm:ss')}"></span></td>
+                    <div><strong>Стоимость: </strong><span th:text="${order.totalOrderPrice}"></span></div>
                     <div>
                         <strong>Предметы заказа:</strong>
                         <ul>
@@ -341,11 +350,23 @@
                             </li>
                         </ul>
                     </div>
+                    <div class="order-status">
+                        <form th:action="@{/updateOrderStatus}" th:method="post">
+                            <input type="hidden" name="orderId" th:value="${order.id}"/>
+                            <select name="status">
+                                <option value="Оформлен" th:selected="${order.status == 'Оформлен'}">Оформлен</option>
+                                <option value="В пути" th:selected="${order.status == 'В пути'}">В пути</option>
+                                <option value="Доставлен" th:selected="${order.status == 'Доставлен'}">Доставлен</option>
+                            </select>
+                            <button type="submit">Обновить</button>
+                        </form>
+                    </div>
                 </div>
             </th:block>
         </div>
     </th:block>
 </div>
+
 
 </body>
 </html>

@@ -70,6 +70,11 @@ public class OrderService {
     public List<Order> showOrders(Person person) {
         return orderRepository.findAllByPersonOrderByOrderDateDesc(person);
     }
+    public void updateOrderStatus(int orderId, String status) {
+        Order order = orderRepository.findById(orderId).get();
+        order.setStatus(status);
+        orderRepository.save(order);
+    }
 
 //    public List<Order> showAllOrders() {
 //        return orderRepository.findAllOrdersOrderByOrderDate();

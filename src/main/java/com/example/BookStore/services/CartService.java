@@ -5,7 +5,9 @@ import com.example.BookStore.providers.Cart;
 import com.example.BookStore.providers.Person;
 import com.example.BookStore.repositories.BookRepository;
 import com.example.BookStore.repositories.CartRepository;
+import com.example.BookStore.repositories.OrderItemRepository;
 import com.example.BookStore.repositories.PersonRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -19,14 +21,19 @@ public class CartService {
     private final CartRepository cartRepository;
     private final PersonRepository personRepository;
     private final BookRepository bookRepository;
+    private final OrderItemRepository orderItemRepository;
     @Autowired
-    public CartService(CartRepository cartRepository, PersonRepository personRepository, BookRepository bookRepository) {
+    public CartService(CartRepository cartRepository, PersonRepository personRepository, BookRepository bookRepository, OrderItemRepository orderItemRepository) {
         this.cartRepository = cartRepository;
         this.personRepository = personRepository;
         this.bookRepository = bookRepository;
+        this.orderItemRepository = orderItemRepository;
     }
 
-
+    @Transactional
+    public void deleteAll(int id) {
+        cartRepository.deleteAllByBookId(id);
+    }
     public void saveCart(int person_id, int book_id) {
 
         Person person = personRepository.findById(person_id).get();

@@ -178,18 +178,12 @@
             font-weight: bold;
             color: #CAEDA7;
             border: 1px solid #ddd;
-            width: 78%;
+            width: 100%;
             border-radius: 50px;
             padding: 8px;
             background-color: #7E56C8;
             margin-bottom:10px;
-
-        }
-        .cart-icon img {
-            width: auto;
-            height: 40px;
-            border: none;
-            border-radius: 50px;
+            text-align:center;
         }
         .d18 {
             position: absolute;
@@ -367,7 +361,17 @@
         #nav-content li a:hover {
             color: #7E56C8;
         }
+        #nav-content li span {
+            padding: 10px 5px;
+            display: block;
+            text-transform: uppercase;
+            transition: color .1s;
+            color: #333;
+        }
 
+        #nav-content li span:hover {
+            color: #7E56C8;
+        }
         #nav-container:focus-within #nav-content {
             transform: none;
         }
@@ -391,57 +395,69 @@
             color: currentColor;
             transition: .2s ease-in-out;
         }
-
+        span {
+            color: currentColor;
+            transition: .2s ease-in-out;
+        }
         ul {
             padding: 0;
             list-style: none;
+        }
+        .user-info {
+            display: ruby;
         }
     </style>
 </head>
 <body>
 <header><h1 class=" header-title">Каталог товаров</h1></header>
-<div id="nav-container" style="z-index:9999;">
-    <div class="bg"></div>
-    <div class="button"style="color:white;" tabindex="0">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-    </div>
-    <div id="nav-content" tabindex="0">
-        <div sec:authorize="hasRole('ROLE_ADMIN')">
-            <ul>
-                <li> <a href="/">Главная</a></li>
-                <li> <a href="/add-book">Добавить</a></li>
-                <li>  <a href="/bookDetails">Редактировать</a></li>
-                <li> <a href="/users">Заказы</a></li>
-                <li>
-                    <form th:action="@{/logout}" th:method="POST" >
-                        <input  style="background-color: transparent;border:0;       padding: 10px 5px;
-                            display: block;
-                            text-transform: uppercase;
-                            transition: color .1s;
-                            color: #333; "  onmouseover="this.style.color=' #7E56C8';" onmouseout="this.style.color='#333';"
-                                type="submit" value="Выход">
-                    </form>
-                </li>
-            </ul>
+
+<div  class="user-info" sec:authorize="isAuthenticated()">
+
+    <div id="nav-container" style="z-index:9999;">
+        <div class="bg"></div>
+        <div class="button"style="color:white;" tabindex="0">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
         </div>
-        <div sec:authorize="hasRole('ROLE_USER')" >
-            <ul>
-                <li> <a href="/">Главная</a></li>
-                <li>  <a href="/cart">Корзина</a></li>
-                <li> <a href="/my-orders">Заказы</a></li>
-                <li>
-                    <form th:action="@{/logout}" th:method="POST" >
-                        <input  style="background-color: transparent;border:0;       padding: 10px 5px;
-                            display: block;
-                            text-transform: uppercase;
-                            transition: color .1s;
-                            color: #333; "  onmouseover="this.style.color=' #7E56C8';" onmouseout="this.style.color='#333';"
-                                type="submit" value="Выход">
-                    </form>
-                </li>
-            </ul>
+        <div id="nav-content" tabindex="0">
+            <div sec:authorize="hasRole('ROLE_ADMIN')">
+                <ul>
+                    <li><span style="" sec:authentication="name"></span></li>
+                    <li> <a href="/">Главная</a></li>
+                    <li> <a href="/add-book">Добавить</a></li>
+                    <li>  <a href="/bookDetails">Редактировать</a></li>
+                    <li> <a href="/users">Заказы</a></li>
+                    <li>
+                        <form th:action="@{/logout}" th:method="POST" >
+                            <input  style="background-color: transparent;border:0;       padding: 10px 5px;
+                                display: block;
+                                text-transform: uppercase;
+                                transition: color .1s;
+                                color: #333; "  onmouseover="this.style.color=' #7E56C8';" onmouseout="this.style.color='#333';"
+                                    type="submit" value="Выход">
+                        </form>
+                    </li>
+                </ul>
+            </div>
+            <div sec:authorize="hasRole('ROLE_USER')" >
+                <ul>
+                    <li><span style="" sec:authentication="name"></span></li>
+                    <li> <a href="/">Главная</a></li>
+                    <li>  <a href="/cart">Корзина</a></li>
+                    <li> <a href="/my-orders">Заказы</a></li>
+                    <li>
+                        <form th:action="@{/logout}" th:method="POST" >
+                            <input  style="background-color: transparent;border:0;       padding: 10px 5px;
+                                display: block;
+                                text-transform: uppercase;
+                                transition: color .1s;
+                                color: #333; "  onmouseover="this.style.color=' #7E56C8';" onmouseout="this.style.color='#333';"
+                                    type="submit" value="Выход">
+                        </form>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

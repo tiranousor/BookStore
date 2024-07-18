@@ -3,11 +3,9 @@ package com.example.BookStore.controller;
 import com.example.BookStore.providers.Book;
 import com.example.BookStore.providers.Order;
 import com.example.BookStore.providers.Person;
-import com.example.BookStore.services.BookService;
-import com.example.BookStore.services.CartService;
-import com.example.BookStore.services.OrderService;
-import com.example.BookStore.services.PersonService;
+import com.example.BookStore.services.*;
 import com.example.BookStore.util.BookValidator;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -25,14 +23,16 @@ public class AdminController {
     private final BookValidator bookValidator;
     private final BookService bookService;
     private final OrderService orderService;
+    private final OrderItemService orderItemService;
     private final PersonService personService;
     private final CartService cartService;
 
 
-    public AdminController(BookValidator bookValidator, BookService bookService, OrderService orderService, PersonService personService, CartService cartService) {
+    public AdminController(BookValidator bookValidator, BookService bookService, OrderService orderService, OrderItemService orderItemService, PersonService personService, CartService cartService) {
         this.bookValidator = bookValidator;
         this.bookService = bookService;
         this.orderService = orderService;
+        this.orderItemService = orderItemService;
         this.personService = personService;
         this.cartService = cartService;
     }
@@ -53,13 +53,14 @@ public class AdminController {
         bookService.save(book);
         return "addBook";
     }
-
+    @Transactional
     @PostMapping("/{id}")
     public String deleteBook(@PathVariable("id") int id) {
+        cartService.deleteAll(id);
+        orderItemService.deleteAll(id);
         bookService.delete(id);
         return "redirect:/";
     }
-
     @GetMapping("{id}/edit")
     public String editBook(Model model, @PathVariable("id") int id) {
         model.addAttribute("book", bookService.findOne(id));
@@ -86,5 +87,9 @@ public class AdminController {
         model.addAttribute("personOrdersMap", personOrdersMap);
         return "users";
     }
-
+    @PostMapping("/updateOrderStatus")
+    public String updateOrderStatus(@RequestParam("orderId") int orderId, @RequestParam("status") String status) {
+        orderService.updateOrderStatus(orderId, status);
+        return "redirect:/users";
+    }
 }

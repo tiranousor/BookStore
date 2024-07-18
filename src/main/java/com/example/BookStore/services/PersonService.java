@@ -1,5 +1,6 @@
 package com.example.BookStore.services;
 
+import com.example.BookStore.providers.Book;
 import com.example.BookStore.providers.Person;
 import com.example.BookStore.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,4 +29,5 @@ public class PersonService {
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         personRepository.save(person);
     }
+
 }
