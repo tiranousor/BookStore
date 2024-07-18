@@ -22,6 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -54,7 +55,7 @@ public class SecurityConfiguration {
                 .formLogin(form -> form
                         .loginPage("/login") // страница для логина``
                         .loginProcessingUrl("/process_login")
-                        .defaultSuccessUrl("/", true)
+                        .successHandler(customSuccessHandler())
                         .failureUrl("/login?error")
                         .permitAll() // разрешаем доступ ко всем
                 )
@@ -64,6 +65,11 @@ public class SecurityConfiguration {
                         .permitAll());
 
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler customSuccessHandler() {
+        return new CustomAuthenticationSuccessHandler();
     }
 
 

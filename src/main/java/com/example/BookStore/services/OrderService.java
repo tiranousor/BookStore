@@ -62,7 +62,6 @@ public class OrderService {
 //    public List<Order> showOrders(Person person) {
 //        return orderRepository.findByPerson(person);
 //    }
-//
     public List<Order> showAllOrders() {
         return orderRepository.findAll();
     }
